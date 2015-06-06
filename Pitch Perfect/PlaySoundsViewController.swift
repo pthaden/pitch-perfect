@@ -51,6 +51,23 @@ class PlaySoundsViewController: UIViewController {
         
     }
     
+    func stopAll() {
+        audioEngine.stop()
+        audioEngine.reset()
+        audioPlayer.stop()
+        audioPlayer.currentTime = 0.0
+    }
+    
+    func playAudioWithRate(rate: Float){
+        //stop all audio
+        stopAll()
+        //change the rate
+        audioPlayer.rate = rate
+        //play the file
+        playPlayer()
+        
+    }
+    
     @IBAction func stopPlayer(sender: UIButton) {
         audioPlayer.stop()
         
@@ -114,17 +131,13 @@ class PlaySoundsViewController: UIViewController {
     
     
     @IBAction func playFast(sender: UIButton) {
-        audioPlayer.rate = 1.5
-        //play the audio
-        playPlayer()
+
+        playAudioWithRate(1.5)
         
     }
     @IBAction func playSlow(sender: UIButton) {
         
-        audioPlayer.rate = 0.5
-        playPlayer()
-        
-        
+        playAudioWithRate(0.5)
         
     }
 }
