@@ -42,9 +42,6 @@ class PlaySoundsViewController: UIViewController {
     
     func playPlayer() {
         //play the audio
-        audioPlayer.stop()
-        //fix bug where effects overlap
-        audioEngine.stop()
         audioPlayer.currentTime = 0.0
         audioPlayer.prepareToPlay()
         audioPlayer.play()
@@ -69,7 +66,7 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func stopPlayer(sender: UIButton) {
-        audioPlayer.stop()
+        stopAll()
         
     }
     @IBAction func playChipmunkAudio(sender: AnyObject) {
@@ -81,10 +78,10 @@ class PlaySoundsViewController: UIViewController {
         
     }
     func playAudioWithVariablePitch(pitch: Float){
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        //stop all audio
+        stopAll()
         
+        //build up audio engine effects
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
@@ -98,6 +95,7 @@ class PlaySoundsViewController: UIViewController {
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         audioEngine.startAndReturnError(nil)
         
+        //play the effect
         audioPlayerNode.play()
     }
     
